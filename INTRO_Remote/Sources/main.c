@@ -50,6 +50,7 @@ int main(void)
   /* Write your code here */
   for(;;) {
 	int i = 10;
+	int zahl1 = 55;		//Erste Zahl
   }
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
