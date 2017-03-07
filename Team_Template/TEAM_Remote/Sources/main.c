@@ -34,7 +34,7 @@
 #include "RTOSCNTRLDD1.h"
 #include "MCUC1.h"
 #include "LEDPin1.h"
-#include "BitIoLdd17.h"
+#include "BitIoLdd18.h"
 #include "WAIT1.h"
 #include "UTIL1.h"
 #include "KIN1.h"
@@ -87,6 +87,7 @@
 #include "Rx1.h"
 #include "USB0.h"
 #include "TmDt1.h"
+#include "LED1.h"
 #include "TMOUT1.h"
 #include "HF1.h"
 #include "CS1.h"
@@ -108,9 +109,21 @@ int main(void)
   PE_low_level_init();
   /*** End of Processor Expert internal initialization.                    ***/
 
+
   /* Write your code here */
+  for (;;){
+	  LED1_On();
+	  LCD_LED_On();
+	  WAIT1_Waitms(100);
+	  LED1_Off();
+	  WAIT1_Waitms(100);
+  }
+
+
+
   APP_Start();
   /* For example: for(;;) { } */
+
 
   /*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
