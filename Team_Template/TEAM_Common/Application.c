@@ -134,7 +134,17 @@ void APP_Start(void) {
   EVNT_SetEvent(EVNT_STARTUP);
 #endif
   for(;;) {
-    WAIT1_Waitms(25); /* just wait for some arbitrary time .... */
+	/* Code by Livio */
+    WAIT1_Waitms(100); /* just wait for some arbitrary time .... */
+    LED1_On();			 	//LEDPin1_ClrVal();
+    WAIT1_Waitms(300);
+
+    CS1_CriticalVariable()
+    CS1_EnterCritical();
+    LED1_Off();
+    CS1_ExitCritical();
+
+    /* End Code by Livio */
   }
 #endif
 }

@@ -24,7 +24,7 @@
 #endif
 
 #if PL_CONFIG_NOF_LEDS>=1
-  #define LED_On(nr)      LEDPin##nr##_ClrVal()
+  #define LED_On(nr)      LEDPin##nr##_ClrVal()    //LEDPin1_ClrVal();
   #define LED_Off(nr)     LEDPin##nr##_SetVal()
   #define LED_Neg(nr)     LEDPin##nr##_NegVal()
   #define LED_Get(nr)     (!LEDPin##nr##_GetVal())
