@@ -45,13 +45,18 @@
 
 #if PL_CONFIG_HAS_EVENTS
 void APP_EventHandler(EVNT_Handle event) {
-  /*! \todo handle events */
-  switch(event) {
-  case EVNT_STARTUP:
-    break;
-  default:
-    break;
-   } /* switch */
+	  /*! \todo handle events */
+	  switch(event) {
+	  case EVNT_STARTUP:
+	    break;
+	  case EVNT_LED_OFF:
+	    break;
+	  case EVNT_LED_HEARTBEAT:
+		  LEDPin1_NegVal();
+		break;
+	  default:
+	    break;
+	   } /* switch */
 }
 #endif /* PL_CONFIG_HAS_EVENTS */
 
@@ -135,15 +140,13 @@ void APP_Start(void) {
 #endif
   for(;;) {
 	/* Code by Livio */
-    WAIT1_Waitms(100); /* just wait for some arbitrary time .... */
-    LED1_On();			 	//LEDPin1_ClrVal();
-    WAIT1_Waitms(300);
-
-    CS1_CriticalVariable()
-    CS1_EnterCritical();
-    LED1_Off();
-    CS1_ExitCritical();
-
+	  EVNT_Init();
+	  for(;;) {
+	    WAIT1_Waitms(500); /* just wait for some arbitrary time .... */
+	    EVNT_SetEvent(EVNT_LED_HEARTBEAT);
+	    WAIT1_Waitms(500); /* just wait for some arbitrary time .... */
+	    EVNT_HandleEvent(APP_EventHandler, TRUE);
+	  }
     /* End Code by Livio */
   }
 #endif
