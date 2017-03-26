@@ -138,17 +138,16 @@ void APP_Start(void) {
 #if PL_CONFIG_HAS_EVENTS
   EVNT_SetEvent(EVNT_STARTUP);
 #endif
+
+  /* Code by Livio */
+  EVNT_Init();
+  __asm volatile("cpsie i"); /* enable interrupts */
   for(;;) {
-	/* Code by Livio */
-	  EVNT_Init();
-	  for(;;) {
-	    WAIT1_Waitms(500); /* just wait for some arbitrary time .... */
-	    EVNT_SetEvent(EVNT_LED_HEARTBEAT);
-	    WAIT1_Waitms(500); /* just wait for some arbitrary time .... */
+	    WAIT1_Waitms(50); /* just wait for some arbitrary time .... */
 	    EVNT_HandleEvent(APP_EventHandler, TRUE);
-	  }
-    /* End Code by Livio */
   }
+  /* End Code by Livio */
+
 #endif
 }
 
