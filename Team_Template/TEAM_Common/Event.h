@@ -56,6 +56,8 @@ typedef enum EVNT_Handle {
   #endif
 #endif
   /*!< \todo Your extra events here */
+  EVNT_SW1_SHORT_PRESSED,
+  EVNT_SW1_LONG_PRESSED,
   EVNT_NOF_EVENTS       /*!< Must be last one! */
 } EVNT_Handle;
 

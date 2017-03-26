@@ -54,9 +54,18 @@ void APP_EventHandler(EVNT_Handle event) {
 	  case EVNT_LED_HEARTBEAT:
 		  LEDPin1_NegVal();
 		break;
+	  case EVNT_SW1_PRESSED:
+		  LEDPin1_NegVal();
+		break;
+	  case EVNT_SW1_SHORT_PRESSED:
+		  LEDPin1_SetVal();
+		break;
+	  case EVNT_SW1_LONG_PRESSED:
+		  LEDPin1_ClrVal();
+		break;
 	  default:
 	    break;
-	   } /* switch */
+	  } /* switch */
 }
 #endif /* PL_CONFIG_HAS_EVENTS */
 
@@ -138,15 +147,26 @@ void APP_Start(void) {
 #if PL_CONFIG_HAS_EVENTS
   EVNT_SetEvent(EVNT_STARTUP);
 #endif
-
-  /* Code by Livio */
-  EVNT_Init();
+   //EVNT_Init(); already init ???
   __asm volatile("cpsie i"); /* enable interrupts */
+
+  /* Code by Livio for Timer/Events
   for(;;) {
-	    WAIT1_Waitms(50); /* just wait for some arbitrary time .... */
+	    WAIT1_Waitms(50); /* just wait for some arbitrary time ....
 	    EVNT_HandleEvent(APP_EventHandler, TRUE);
   }
-  /* End Code by Livio */
+   End Code by Livio */
+
+  /* Code by Livio Keys */
+  for(;;){
+	  KEY_Scan();
+	  EVNT_HandleEvent(APP_EventHandler, TRUE);
+  }
+
+
+
+  /* End Code by Livio Keys */
+
 
 #endif
 }
