@@ -43,7 +43,9 @@
   #include "LCD.h"
 #endif
 
+#if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 #if PL_CONFIG_HAS_EVENTS
+/* Eventhandler ROBO */
 void APP_EventHandler(EVNT_Handle event) {
 	  /*! \todo handle events */
 	  switch(event) {
@@ -68,6 +70,26 @@ void APP_EventHandler(EVNT_Handle event) {
 	  } /* switch */
 }
 #endif /* PL_CONFIG_HAS_EVENTS */
+#else /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
+#if PL_CONFIG_HAS_EVENTS
+/* Eventhandler REMOTE */
+void APP_EventHandler(EVNT_Handle event) {
+	  /*! \todo handle events */
+	  switch(event) {
+	  case EVNT_STARTUP:
+	    break;
+	  case EVNT_LED_OFF:
+	    break;
+	  case EVNT_LED_HEARTBEAT:
+		  LEDPin1_NegVal();
+		break;
+	  default:
+	    break;
+	  } /* switch */
+}
+#endif /* PL_CONFIG_HAS_EVENTS */
+#endif /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
+
 
 static const KIN1_UID RoboIDs[] = {
   /* 0: L20, V2 */ {{0x00,0x03,0x00,0x00,0x67,0xCD,0xB7,0x21,0x4E,0x45,0x32,0x15,0x30,0x02,0x00,0x13}},
@@ -167,7 +189,7 @@ void APP_Start(void) {
   /* End Code by Livio Keys */
 
 #else //PL_LOCAL_CONFIG_BOARD_IS_REMOTE
-
+/* Implementation for REMOTE */
 
 
 
