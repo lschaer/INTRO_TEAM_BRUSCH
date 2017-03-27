@@ -150,6 +150,8 @@ void APP_Start(void) {
    //EVNT_Init(); already init ???
   __asm volatile("cpsie i"); /* enable interrupts */
 
+#if PL_LOCAL_CONFIG_BOARD_IS_ROBO
+
   /* Code by Livio for Timer/Events
   for(;;) {
 	    WAIT1_Waitms(50); /* just wait for some arbitrary time ....
@@ -157,16 +159,20 @@ void APP_Start(void) {
   }
    End Code by Livio */
 
-  /* Code by Livio Keys */
+  /* Code by Livio Keys
   for(;;){
 	  KEY_Scan();
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
   }
-
-
-
   /* End Code by Livio Keys */
 
+#else //PL_LOCAL_CONFIG_BOARD_IS_REMOTE
+
+
+
+
+
+#endif
 
 #endif
 }

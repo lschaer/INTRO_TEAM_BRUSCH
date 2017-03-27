@@ -26,10 +26,10 @@
   #endif
 #endif
 
-void KEY_Scan(void) {
+void KEY_Scan(void) {									// modified Livio
 #if PL_CONFIG_NOF_KEYS>=1 && !PL_CONFIG_KEY_1_ISR
   if (KEY1_Get()) { /* key pressed */
-     //EVNT_SetEvent(EVNT_SW1_PRESSED); OLD
+     //EVNT_SetEvent(EVNT_SW1_PRESSED); 				OLD
     WAIT1_Waitms(50);
     if(KEY1_Get()){			// still pressed ?
       int cnt = 0;
