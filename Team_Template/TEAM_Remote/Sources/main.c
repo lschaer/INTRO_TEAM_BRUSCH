@@ -111,14 +111,6 @@ int main(void)
 
 
   /* Write your code here */
-  for (;;){
-	  LED1_On();
-	  LCD_LED_On();
-	  WAIT1_Waitms(100);
-	  LED1_Off();
-	  WAIT1_Waitms(100);
-  }
-
 
 
   APP_Start();

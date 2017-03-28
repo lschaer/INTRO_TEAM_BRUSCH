@@ -10,6 +10,7 @@
 #include "Application.h"
 #include "Event.h"
 #include "LED.h"
+#include "LED1.h"
 #include "WAIT1.h"
 #include "CS1.h"
 #include "Keys.h"
@@ -78,10 +79,11 @@ void APP_EventHandler(EVNT_Handle event) {
 	  switch(event) {
 	  case EVNT_STARTUP:
 	    break;
-	  case EVNT_LED_OFF:
+	  case EVNT_SW6_PRESSED:
+		  CLS1_SendStr("Button 6 pressed!! \r\n",CLS1_GetStdio()->stdOut);
 	    break;
 	  case EVNT_LED_HEARTBEAT:
-		  LEDPin1_NegVal();
+		  LED1_Neg();
 		break;
 	  default:
 	    break;
@@ -191,8 +193,33 @@ void APP_Start(void) {
 #else //PL_LOCAL_CONFIG_BOARD_IS_REMOTE
 /* Implementation for REMOTE */
 
+  __asm volatile("cpsie i"); // Enable Interrupts
+  LED1_On();
+  CLS1_SendStr("Connected to REMOTE...waiting for Button press! \r\n",CLS1_GetStdio()->stdOut);
+  //int cnt = 0;
+
+  for(;;){
 
 
+  /*
+  CLS1_SendStr("Hello ",CLS1_GetStdio()->stdOut);
+  CLS1_SendNum32u(cnt,CLS1_GetStdio()->stdOut);
+  CLS1_SendStr("\r\n", CLS1_GetStdio()->stdOut);
+  cnt++;
+  WAIT1_Waitms(100);
+   */
+
+  /*
+  if (cnt > 10){
+	  CLS1_SendStr("Counter reached: ",CLS1_GetStdio()->stdOut);
+	  CLS1_SendNum32u(cnt,CLS1_GetStdio()->stdOut);
+	  CLS1_SendStr("\r\n", CLS1_GetStdio()->stdOut);
+	  break;
+  }
+*/
+	  KEY_Scan();
+	  EVNT_HandleEvent(APP_EventHandler, TRUE);
+  }
 
 #endif
 
