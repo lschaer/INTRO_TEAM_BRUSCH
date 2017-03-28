@@ -63,7 +63,8 @@ void APP_EventHandler(EVNT_Handle event) {
 		  LEDPin1_SetVal();
 		break;
 	  case EVNT_SW1_LONG_PRESSED:
-		  LEDPin1_ClrVal();
+		  //LEDPin1_ClrVal();     OLD
+		  CLS1_SendStr("Long Press \r\n", CLS1_GetStdio()->stdOut);
 		break;
 	  default:
 	    break;
@@ -187,6 +188,16 @@ void APP_Start(void) {
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
   }
   /* End Code by Livio Keys */
+
+  for(;;){
+	  CLS1_SendStr("Hello World! \r\n", CLS1_GetStdio()->stdOut);
+	  WAIT1_Waitms(500);
+	  KEY_Scan();
+	  EVNT_HandleEvent(APP_EventHandler, TRUE);
+
+  }
+
+
 
 #else //PL_LOCAL_CONFIG_BOARD_IS_REMOTE
 /* Implementation for REMOTE */
