@@ -222,9 +222,10 @@ void APP_Start(void) {
 #else //PL_LOCAL_CONFIG_BOARD_IS_REMOTE
 /* Implementation for REMOTE */
 
-  __asm volatile("cpsie i"); // Enable Interrupts
-  LED1_On();
-  CLS1_SendStr("Connected to REMOTE...waiting for Button press! \r\n",CLS1_GetStdio()->stdOut);
+
+  TRG_Init();
+  TRG_setTrigger();
+  CLS1_SendStr("Connected to REMOTE...waiting for whatever! \r\n",CLS1_GetStdio()->stdOut);
   //int cnt = 0;
 
   for(;;){
