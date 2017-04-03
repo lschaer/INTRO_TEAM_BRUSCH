@@ -31,11 +31,15 @@ void TMR_OnInterrupt(void) {
 		EVNT_SetEvent(EVNT_LED_HEARTBEAT);
 		i = 0;
 	}
-	i++;
-  */
+	i++; 				*/
+
+	TRG_AddTick();    //modif Livio for LAB Trigger
+
 }
 
 void TMR_Init(void) {
+
+
 }
 
 void TMR_Deinit(void) {

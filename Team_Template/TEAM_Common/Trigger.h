@@ -17,6 +17,19 @@
 #define TRG_TICKS_MS  TMR_TICK_MS
   /*!< Defines the period at which TRG_IncTick gets called */
 
+#if PL_LOCAL_CONFIG_BOARD_IS_ROBO
+/*! \brief Triggers which can be used from the application */
+typedef enum {
+  /*! \todo Extend the list of triggers as needed */
+  TRG_BUZ_BEEP, /*!< Buzzer beep */
+  TRG_KEYPRESS, /*!< key debounce */
+  TRG_BUZ_TUNE, /*!< buzzer tune */
+  TRG_LED_BLINK, /*!< LED blink */	    //add by Livio
+  TRG_NOF_TRIGGERS /*!< Must be last! */
+} TRG_TriggerKind;
+
+
+#else /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
 /*! \brief Triggers which can be used from the application */
 typedef enum {
   /*! \todo Extend the list of triggers as needed */
@@ -25,6 +38,11 @@ typedef enum {
   TRG_BUZ_TUNE, /*!< buzzer tune */
   TRG_NOF_TRIGGERS /*!< Must be last! */
 } TRG_TriggerKind;
+
+#endif /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
+
+
+
 
 /*! \brief Type for the data pointer used by the callback */
 typedef void *TRG_CallBackDataPtr;

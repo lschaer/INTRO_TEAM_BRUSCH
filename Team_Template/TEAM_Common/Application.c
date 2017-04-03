@@ -10,7 +10,8 @@
 #include "Application.h"
 #include "Event.h"
 #include "LED.h"
-#include "LED1.h"
+//#include "LED1.h"  was ist mit dem???
+#include "Trigger.h"   //added by livio
 #include "WAIT1.h"
 #include "CS1.h"
 #include "Keys.h"
@@ -46,11 +47,20 @@
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 #if PL_CONFIG_HAS_EVENTS
+
+
+static void CallBackLED(void) {			// modified Livio
+    LED1_Neg();										// Where is the best place to call the CallBack function?
+}
+
+
 /* Eventhandler ROBO */
 void APP_EventHandler(EVNT_Handle event) {
 	  /*! \todo handle events */
 	  switch(event) {
 	  case EVNT_STARTUP:
+		  (void)BUZ_PlayTune(BUZ_TUNE_WELCOME);
+		  //(void)TRG_SetTrigger(TRG_LED_BLINK, 0, CallBackLED(), NULL);
 	    break;
 	  case EVNT_LED_OFF:
 	    break;
@@ -61,7 +71,8 @@ void APP_EventHandler(EVNT_Handle event) {
 		  LEDPin1_NegVal();
 		break;
 	  case EVNT_SW1_SHORT_PRESSED:
-		  LEDPin1_SetVal();
+		  (void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
+		  LEDPin1_NegVal();
 		break;
 	  case EVNT_SW1_LONG_PRESSED:
 		  //LEDPin1_ClrVal();     OLD
@@ -184,20 +195,27 @@ void APP_Start(void) {
   }
    End Code by Livio */
 
-  /* Code by Livio Keys
+  /* Code by Livio Keys */
   for(;;){
 	  KEY_Scan();
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
   }
   /* End Code by Livio Keys */
 
+  /* Code by Livio Console
+  int i = 0;
   for(;;){
-	  CLS1_SendStr("Hello World! \r\n", CLS1_GetStdio()->stdOut);
+	  CLS1_SendStr("Hello World! ",CLS1_GetStdio()->stdOut);
+	  CLS1_SendNum8u(i, CLS1_GetStdio()->stdOut);
+	  CLS1_SendStr("\r\n",CLS1_GetStdio()->stdOut);
 	  WAIT1_Waitms(500);
 	  KEY_Scan();
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
-
+	  i++;
   }
+  /* End Code by Livio Console */
+
+
 
 
 

@@ -110,6 +110,7 @@
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "Application.h"
 #include "LED.h"
+#include "Trigger.h"
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
