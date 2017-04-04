@@ -43,6 +43,9 @@
 #if PL_CONFIG_HAS_LCD_MENU
   #include "LCD.h"
 #endif
+#if PL_LOCAL_CONFIG_BOARD_IS_REMOTE
+	#include "LED1.h"
+#endif
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 #if PL_CONFIG_HAS_EVENTS
@@ -220,32 +223,14 @@ void APP_Start(void) {
 #else //PL_LOCAL_CONFIG_BOARD_IS_REMOTE
 /* Implementation for REMOTE */
 
-  __asm volatile("cpsie i"); // Enable Interrupts
-  LED1_On();
-  CLS1_SendStr("Connected to REMOTE...waiting for Button press! \r\n",CLS1_GetStdio()->stdOut);
-  //int cnt = 0;
+  CLS1_SendStr("**#####################INTRO########################** \r\n",CLS1_GetStdio()->stdOut);
+  CLS1_SendStr("Connected to REMOTE...waiting for Action! \r\n",CLS1_GetStdio()->stdOut);
 
   for(;;){
 
-
-  /*
-  CLS1_SendStr("Hello ",CLS1_GetStdio()->stdOut);
-  CLS1_SendNum32u(cnt,CLS1_GetStdio()->stdOut);
-  CLS1_SendStr("\r\n", CLS1_GetStdio()->stdOut);
-  cnt++;
-  WAIT1_Waitms(100);
-   */
-
-  /*
-  if (cnt > 10){
-	  CLS1_SendStr("Counter reached: ",CLS1_GetStdio()->stdOut);
-	  CLS1_SendNum32u(cnt,CLS1_GetStdio()->stdOut);
-	  CLS1_SendStr("\r\n", CLS1_GetStdio()->stdOut);
-	  break;
-  }
-*/
 	  KEY_Scan();
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
+
   }
 
 #endif
