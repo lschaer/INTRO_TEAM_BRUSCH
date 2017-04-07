@@ -50,9 +50,7 @@
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 #if PL_CONFIG_HAS_EVENTS
 
-static void CallBackLED(void*p) {			// modified Livio
-    LED1_Neg();
-}
+
 
 
 
@@ -61,7 +59,7 @@ void APP_EventHandler(EVNT_Handle event) {
 	  /*! \todo handle events */
 	  switch(event) {
 	  case EVNT_STARTUP:
-		  //(void)BUZ_PlayTune(BUZ_TUNE_WELCOME);
+		  (void)BUZ_PlayTune(BUZ_TUNE_WELCOME);
 	    break;
 	  case EVNT_LED_OFF:
 	    break;
@@ -72,8 +70,8 @@ void APP_EventHandler(EVNT_Handle event) {
 		  LEDPin1_NegVal();
 		break;
 	  case EVNT_SW1_SHORT_PRESSED:
-		  //(void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
-		  (void)TRG_SetTrigger(TRG_LED_BLINK, 1000/TRG_TICKS_MS, CallBackLED, NULL);
+		  (void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
+		  //(void)TRG_SetTrigger(TRG_LED_BLINK, 1000/TRG_TICKS_MS, CallBackLED, NULL);
 		break;
 	  case EVNT_SW1_LONG_PRESSED:
 		  //LEDPin1_ClrVal();     OLD
@@ -181,9 +179,7 @@ void APP_Start(void) {
   vTaskStartScheduler(); /* start the RTOS, create the IDLE task and run my tasks (if any) */
   /* does usually not return! */
 #else
-#if PL_CONFIG_HAS_EVENTS
-  EVNT_SetEvent(EVNT_STARTUP);
-#endif
+
    //EVNT_Init(); already init ???
   __asm volatile("cpsie i"); /* enable interrupts */
 
