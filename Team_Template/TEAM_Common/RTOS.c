@@ -32,7 +32,6 @@ static void MainLoopTask(void *pvParameter){
 	for(;;){
 	  KEY_Scan();
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
-	  vTaskDelay(100/portTICK_PERIOD_MS); // 1000*ticks /10ms = 1s
 	}
 }
 
