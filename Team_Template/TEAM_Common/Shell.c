@@ -354,7 +354,8 @@ static void ShellTask(void *pvParameters) {
     ios[i].buf[0] = '\0';
   }
   SHELL_SendString("Shell task started!\r\n");
-#if CLS1_DEFAULT_SERIAL
+  CLS1_ParseWithCommandTable((unsigned char*)CLS1_CMD_HELP, ios[0].stdio, CmdParserTable);
+  #if CLS1_DEFAULT_SERIAL
   (void)CLS1_ParseWithCommandTable((unsigned char*)CLS1_CMD_HELP, ios[0].stdio, CmdParserTable);
 #endif
   for(;;) {

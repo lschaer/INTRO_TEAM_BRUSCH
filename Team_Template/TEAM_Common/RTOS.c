@@ -13,6 +13,7 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
+#include "LED1.h"
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 
@@ -108,10 +109,25 @@ void RTOS_Deinit(void) {
 
 
 #else /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
+
+static void blinkyTask(void *pvParameters){
+	for(;;){
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	LED1_Neg();
+	vTaskDelayUntil(&xLastWakeTime,100/portTICK_PERIOD_MS);
+	}
+}
+
+
 void RTOS_Init(void) {
   /*! \todo Create tasks here */
-  //xTaskCreate()
+	EVNT_SetEvent(EVNT_STARTUP);
 
+	BaseType_t res;
+	xTaskHandle tskHndl;
+
+	res = xTaskCreate(blinkyTask,"Blinky",configMINIMAL_STACK_SIZE+50,(void*)NULL,tskIDLE_PRIORITY,&tskHndl);
+	if(res!=pdPASS) { /*Error handling here*/}
 
 }
 
