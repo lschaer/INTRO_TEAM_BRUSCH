@@ -59,7 +59,7 @@ void APP_EventHandler(EVNT_Handle event) {
 	  /*! \todo handle events */
 	  switch(event) {
 	  case EVNT_STARTUP:
-		  (void)BUZ_PlayTune(BUZ_TUNE_WELCOME);
+		  //(void)BUZ_PlayTune(BUZ_TUNE_WELCOME);
 	    break;
 	  case EVNT_LED_OFF:
 	    break;
@@ -70,7 +70,8 @@ void APP_EventHandler(EVNT_Handle event) {
 		  LEDPin1_NegVal();
 		break;
 	  case EVNT_SW1_SHORT_PRESSED:
-		  (void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
+		  CLS1_SendStr("Hello World! ",CLS1_GetStdio()->stdOut);
+		  //(void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
 		  //(void)TRG_SetTrigger(TRG_LED_BLINK, 1000/TRG_TICKS_MS, CallBackLED, NULL);
 		break;
 	  case EVNT_SW1_LONG_PRESSED:
