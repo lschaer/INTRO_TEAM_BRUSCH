@@ -343,11 +343,15 @@ void SHELL_ParseCmd(uint8_t *cmd) {
   (void)CLS1_ParseWithCommandTable(cmd, ios[0].stdio, CmdParserTable);
 }
 
+
 #if PL_CONFIG_HAS_RTOS
 static void ShellTask(void *pvParameters) {
   int i;
   /* \todo Extend as needed */
-
+//  (void) SHELL_PrintHelp(ios[i].stdio); something is wrong here
+  if(SHELL_PrintHelp(CLS1_GetStdio())!=ERR_OK){
+  for(;;){} /* error */
+  }
   (void)pvParameters; /* not used */
   /* initialize buffers */
   for(i=0;i<sizeof(ios)/sizeof(ios[0]);i++) {
