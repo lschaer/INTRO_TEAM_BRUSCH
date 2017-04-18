@@ -13,7 +13,7 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
-#include "LED1.h"
+//#include "LED1.h"
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 
