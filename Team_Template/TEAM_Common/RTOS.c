@@ -37,19 +37,6 @@ static void MainLoopTask(void *pvParameter){
 	}
 }
 
-static void AppTask(void* param) {
-  const int *whichLED = (int*)param;
-
-  for(;;) {
-    if (*whichLED==1) {
-      LED1_Neg();
-    } else if (*whichLED==2) {
-      LED2_Neg();
-    }
-    vTaskDelay(100/portTICK_PERIOD_MS); // 1000*ticks /10ms = 1s
-  }
-}
-
 
 void RTOS_Init(void) {
   /*! \todo Create tasks here */
@@ -78,30 +65,7 @@ void RTOS_Init(void) {
 		  );
   if(res!=pdPASS) { /*Error handling here*/}
 
-  /* Es wird 2 mal der TASK AppTask erstellt */
-  static const int led1 = 1;
-  static const int led2 = 2;
-
-  res = xTaskCreate(AppTask,
-		  (signed portCHAR *)"App1",
-		  100,
-		  (void*)&led1,
-		  tskIDLE_PRIORITY,
-		  NULL
-		  );
-  if(res!=pdPASS) { /*Error handling here*/}
-  res = xTaskCreate(AppTask,
-		  (signed portCHAR *)"App2",
-		  100,
-		  (void*)&led2,
-		  tskIDLE_PRIORITY,
-		  NULL
-		  );
-  if(res!=pdPASS) { /*Error handling here*/}
-
 }
-
-
 
 
 void RTOS_Deinit(void) {

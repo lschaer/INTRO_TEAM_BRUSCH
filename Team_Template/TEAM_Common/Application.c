@@ -61,10 +61,10 @@ void APP_EventHandler(EVNT_Handle event) {
 	  case EVNT_LED_OFF:
 	    break;
 	  case EVNT_LED_HEARTBEAT:
-		  LEDPin1_NegVal();
+		  //LEDPin1_NegVal();
 		break;
 	  case EVNT_SW1_PRESSED:
-		  LEDPin1_NegVal();
+		  //LEDPin1_NegVal();
 		break;
 	  case EVNT_SW1_SHORT_PRESSED:
 		  CLS1_SendStr("Hello World! ",CLS1_GetStdio()->stdOut);
