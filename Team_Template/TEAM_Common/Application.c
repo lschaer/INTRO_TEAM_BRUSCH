@@ -51,9 +51,6 @@
 #if PL_CONFIG_HAS_EVENTS
 
 
-
-
-
 /* Eventhandler ROBO */
 void APP_EventHandler(EVNT_Handle event) {
 	  /*! \todo handle events */
@@ -71,8 +68,9 @@ void APP_EventHandler(EVNT_Handle event) {
 		break;
 	  case EVNT_SW1_SHORT_PRESSED:
 		  CLS1_SendStr("Hello World! ",CLS1_GetStdio()->stdOut);
-		  //(void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
-		  //(void)TRG_SetTrigger(TRG_LED_BLINK, 1000/TRG_TICKS_MS, CallBackLED, NULL);
+		  (void)BUZ_PlayTune(BUZ_TUNE_BUTTON);
+		  SQUEUE_SendString("ABCDEFG");							//Sending over Shell Queue
+		  //(void)TRG_SetTrigger(TRG_LED_BLINK, 1000/TRG_TICKS_MS, CallBackLED(), NULL);
 		break;
 	  case EVNT_SW1_LONG_PRESSED:
 		  //LEDPin1_ClrVal();     OLD
