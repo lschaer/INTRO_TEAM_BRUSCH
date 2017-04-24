@@ -13,7 +13,7 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
-//#include "LED1.h"
+#include "LED.h"
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 
@@ -78,7 +78,7 @@ void RTOS_Deinit(void) {
 static void blinkyTask(void *pvParameters){
 	for(;;){
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	LED1_Neg();
+	LEDPin1_NegVal();
 	vTaskDelayUntil(&xLastWakeTime,100/portTICK_PERIOD_MS);
 	}
 }

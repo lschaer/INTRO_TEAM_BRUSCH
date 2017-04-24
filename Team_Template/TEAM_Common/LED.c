@@ -10,6 +10,7 @@
 #if PL_CONFIG_HAS_LEDS
 #include "LED.h"
 
+
 void LED_Deinit(void) {
   LED1_Off();
   LED2_Off();

@@ -44,7 +44,7 @@
   #include "LCD.h"
 #endif
 #if PL_LOCAL_CONFIG_BOARD_IS_REMOTE
-	#include "LED1.h"
+	#include "LED.h"
 #endif
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
