@@ -13,12 +13,9 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
-<<<<<<< HEAD
 
-//#include "LED1.h"
-=======
 #include "LED.h"
->>>>>>> origin/master
+
 
 #include "Shell.h"
 
@@ -87,13 +84,8 @@ static void blinkyTask(void *pvParameters){
 	//SHELL_SendString("Blinky!!\r\n");
 	CLS1_SendStr("Blink!! \r\n",CLS1_GetStdio()->stdOut);
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-<<<<<<< HEAD
-	LED1_Neg();
-	vTaskDelayUntil(&xLastWakeTime,1000/portTICK_PERIOD_MS);
-=======
 	LEDPin1_NegVal();
 	vTaskDelayUntil(&xLastWakeTime,100/portTICK_PERIOD_MS);
->>>>>>> origin/master
 	}
 }
 
