@@ -13,8 +13,12 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
+<<<<<<< HEAD
 
 //#include "LED1.h"
+=======
+#include "LED.h"
+>>>>>>> origin/master
 
 #include "Shell.h"
 
@@ -38,19 +42,6 @@ static void MainLoopTask(void *pvParameter){
 	  EVNT_HandleEvent(APP_EventHandler, TRUE);
 	  vTaskDelay(100/portTICK_PERIOD_MS); // 1000*ticks /10ms = 1s
 	}
-}
-
-static void AppTask(void* param) {
-  const int *whichLED = (int*)param;
-
-  for(;;) {
-    if (*whichLED==1) {
-      LED1_Neg();
-    } else if (*whichLED==2) {
-      LED2_Neg();
-    }
-    vTaskDelay(100/portTICK_PERIOD_MS); // 1000*ticks /10ms = 1s
-  }
 }
 
 
@@ -81,30 +72,7 @@ void RTOS_Init(void) {
 		  );
   if(res!=pdPASS) { /*Error handling here*/}
 
-  /* Es wird 2 mal der TASK AppTask erstellt */
-  static const int led1 = 1;
-  static const int led2 = 2;
-
-  res = xTaskCreate(AppTask,
-		  (signed portCHAR *)"App1",
-		  100,
-		  (void*)&led1,
-		  tskIDLE_PRIORITY,
-		  NULL
-		  );
-  if(res!=pdPASS) { /*Error handling here*/}
-  res = xTaskCreate(AppTask,
-		  (signed portCHAR *)"App2",
-		  100,
-		  (void*)&led2,
-		  tskIDLE_PRIORITY,
-		  NULL
-		  );
-  if(res!=pdPASS) { /*Error handling here*/}
-
 }
-
-
 
 
 void RTOS_Deinit(void) {
@@ -119,8 +87,13 @@ static void blinkyTask(void *pvParameters){
 	//SHELL_SendString("Blinky!!\r\n");
 	CLS1_SendStr("Blink!! \r\n",CLS1_GetStdio()->stdOut);
 	TickType_t xLastWakeTime = xTaskGetTickCount();
+<<<<<<< HEAD
 	LED1_Neg();
 	vTaskDelayUntil(&xLastWakeTime,1000/portTICK_PERIOD_MS);
+=======
+	LEDPin1_NegVal();
+	vTaskDelayUntil(&xLastWakeTime,100/portTICK_PERIOD_MS);
+>>>>>>> origin/master
 	}
 }
 

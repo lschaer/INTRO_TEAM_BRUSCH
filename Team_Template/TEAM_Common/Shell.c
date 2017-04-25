@@ -350,6 +350,7 @@ static void ShellTask(void *pvParameters) {
   int i;
   /* \todo Extend as needed */
 //  (void) SHELL_PrintHelp(ios[i].stdio); something is wrong here
+  CLS1_SendStr("\n\rNow, we start useing a Shell\n\r",CLS1_GetStdio()->stdOut);
   if(SHELL_PrintHelp(CLS1_GetStdio())!=ERR_OK){
   for(;;){} /* error */
   }
@@ -365,9 +366,32 @@ static void ShellTask(void *pvParameters) {
 #endif
   for(;;) {
     /* process all I/Os */
+
     for(i=0;i<sizeof(ios)/sizeof(ios[0]);i++) {
       (void)CLS1_ReadAndParseWithCommandTable(ios[i].buf, ios[i].bufSize, ios[i].stdio, CmdParserTable);
     }
+
+#if PL_CONFIG_HAS_SHELL_QUEUE && PL_CONFIG_SQUEUE_SINGLE_CHAR
+    {
+        /*! \todo Handle shell queue */
+      unsigned char ch;
+
+      while((ch=SQUEUE_ReceiveChar()) && ch!='\0') {
+        SHELL_stdio.stdOut(ch);
+      }
+    }
+#elif PL_CONFIG_HAS_SHELL_QUEUE /* !PL_CONFIG_SQUEUE_SINGLE_CHAR */
+    {
+      const unsigned char *msg;
+
+      msg = SQUEUE_ReceiveMessage();
+      if (msg!=NULL) {
+        CLS1_SendStr(msg, SHELL_stdio.stdOut);
+        vPortFree((void*)msg);
+      }
+    }
+#endif /* PL_CONFIG_HAS_SHELL_QUEUE */
+
     vTaskDelay(pdMS_TO_TICKS(10));
   } /* for */
 }
