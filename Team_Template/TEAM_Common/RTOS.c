@@ -79,13 +79,13 @@ void RTOS_Deinit(void) {
 
 #else /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
 
+/* Testfunction for Task just to Blink an LED */
 static void blinkyTask(void *pvParameters){
 	for(;;){
-	//SHELL_SendString("Blinky!!\r\n");
-	CLS1_SendStr("Blink!! \r\n",CLS1_GetStdio()->stdOut);
+	SHELL_SendString("Blinky!!\r\n");
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	LEDPin1_NegVal();
-	vTaskDelayUntil(&xLastWakeTime,100/portTICK_PERIOD_MS);
+	vTaskDelayUntil(&xLastWakeTime,1000/portTICK_PERIOD_MS);
 	}
 }
 

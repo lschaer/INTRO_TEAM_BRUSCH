@@ -43,9 +43,6 @@
 #if PL_CONFIG_HAS_LCD_MENU
   #include "LCD.h"
 #endif
-#if PL_LOCAL_CONFIG_BOARD_IS_REMOTE
-	#include "LED.h"
-#endif
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 #if PL_CONFIG_HAS_EVENTS

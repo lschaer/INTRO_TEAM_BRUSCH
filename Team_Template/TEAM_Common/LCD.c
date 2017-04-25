@@ -130,7 +130,11 @@ static void LCD_Task(void *param) {
   LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, NULL);
 #endif
 
-  GDisp1_DrawLine(0,0,30,30,GDisp1_COLOR_BLACK);
+  GDisp1_DrawLine(10,20,60,20,GDisp1_COLOR_BLACK);
+  FDisp1_PixelDim x,y;
+  x = 10;
+  y = 10;
+  FDisp1_WriteString("Hello World!",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
   GDisp1_UpdateFull();
   for(;;) {
     if (LedBackLightisOn) {
