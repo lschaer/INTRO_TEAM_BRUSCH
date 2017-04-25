@@ -13,7 +13,10 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
+
 //#include "LED1.h"
+
+#include "Shell.h"
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 
@@ -113,15 +116,18 @@ void RTOS_Deinit(void) {
 
 static void blinkyTask(void *pvParameters){
 	for(;;){
+	//SHELL_SendString("Blinky!!\r\n");
+	CLS1_SendStr("Blink!! \r\n",CLS1_GetStdio()->stdOut);
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	LED1_Neg();
-	vTaskDelayUntil(&xLastWakeTime,100/portTICK_PERIOD_MS);
+	vTaskDelayUntil(&xLastWakeTime,1000/portTICK_PERIOD_MS);
 	}
 }
 
 
 void RTOS_Init(void) {
   /*! \todo Create tasks here */
+	EVNT_HandleEvent(APP_EventHandler, TRUE);
 	EVNT_SetEvent(EVNT_STARTUP);
 
 	BaseType_t res;
