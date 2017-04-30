@@ -100,7 +100,7 @@ static void AppTask(void *pvParameters){
 /* Testfunction for Task just to Blink an LED */
 static void blinkyTask(void *pvParameters){
 	for(;;){
-	SHELL_SendString("Blinky!!\r\n");
+	//SHELL_SendString("Blinky!!\r\n");
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	LEDPin1_NegVal();
 	vTaskDelayUntil(&xLastWakeTime,1000/portTICK_PERIOD_MS);
