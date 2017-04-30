@@ -84,15 +84,10 @@ void KEY_Scan(void) {									// modified Livio
 #else /*PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
 
 void KEY_Scan(void) {									// modified Lucius
-#if PL_CONFIG_NOF_KEYS>=6 && !PL_CONFIG_KEY_6_ISR
-  if (KEY6_Get()) { /* key pressed */
-    EVNT_SetEvent(EVNT_SW6_PRESSED);
-    WAIT1_Waitms(100);
-    if(KEY6_Get()){ //Still pressed??
-    EVNT_SetEvent(EVNT_LED_HEARTBEAT);
-    }
+#if PL_CONFIG_NOF_KEYS>=1 && !PL_CONFIG_KEY_1_ISR
+  if (KEY1_Get()) { /* key pressed */
+    EVNT_SetEvent(EVNT_SW1_PRESSED);
   }
-
 #endif
   /*! \todo check handling all keys */
 #if PL_CONFIG_NOF_KEYS>=2 && !PL_CONFIG_KEY_2_ISR

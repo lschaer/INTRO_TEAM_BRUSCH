@@ -13,6 +13,9 @@
 #include "Event.h"
 #include "Application.h"
 #include "Trigger.h"
+#include "Keys.h"
+#include "KeyDebounce.h"
+
 
 #include "LED.h"
 
@@ -79,6 +82,21 @@ void RTOS_Deinit(void) {
 
 #else /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
 
+
+static void AppTask(void *pvParameters){
+
+	for(;;){
+	#if PL_CONFIG_HAS_KEYS
+    	//KEY_Scan(); //Polling Keys
+    	KEYDBNC_Process(); //using interrupts
+	#endif
+	#if PL_CONFIG_HAS_EVENTS
+    	EVNT_HandleEvent(APP_EventHandler, TRUE);
+	#endif
+    	vTaskDelay(pdMS_TO_TICKS(10));
+	}
+}
+
 /* Testfunction for Task just to Blink an LED */
 static void blinkyTask(void *pvParameters){
 	for(;;){
@@ -92,14 +110,15 @@ static void blinkyTask(void *pvParameters){
 
 void RTOS_Init(void) {
   /*! \todo Create tasks here */
-	EVNT_HandleEvent(APP_EventHandler, TRUE);
 	EVNT_SetEvent(EVNT_STARTUP);
 
 	BaseType_t res;
 	xTaskHandle tskHndl;
-
 	res = xTaskCreate(blinkyTask,"Blinky",configMINIMAL_STACK_SIZE+50,(void*)NULL,tskIDLE_PRIORITY,&tskHndl);
 	if(res!=pdPASS) { /*Error handling here*/}
+
+	res = xTaskCreate(AppTask, "App",configMINIMAL_STACK_SIZE+50,(void*)NULL,tskIDLE_PRIORITY,&tskHndl);
+	if(res!=pdPASS) {/*Error handling here*/}
 
 }
 
