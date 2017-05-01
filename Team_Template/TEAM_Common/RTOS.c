@@ -112,6 +112,8 @@ void RTOS_Init(void) {
   /*! \todo Create tasks here */
 	EVNT_SetEvent(EVNT_STARTUP);
 
+#if !PL_CONFIG_HAS_SNAKE_GAME
+
 	BaseType_t res;
 	xTaskHandle tskHndl;
 	res = xTaskCreate(blinkyTask,"Blinky",configMINIMAL_STACK_SIZE+50,(void*)NULL,tskIDLE_PRIORITY,&tskHndl);
@@ -119,6 +121,7 @@ void RTOS_Init(void) {
 
 	res = xTaskCreate(AppTask, "App",configMINIMAL_STACK_SIZE+50,(void*)NULL,tskIDLE_PRIORITY,&tskHndl);
 	if(res!=pdPASS) {/*Error handling here*/}
+#endif
 
 }
 
