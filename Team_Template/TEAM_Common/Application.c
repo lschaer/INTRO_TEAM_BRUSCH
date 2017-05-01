@@ -17,9 +17,6 @@
 #include "KeyDebounce.h"
 #include "KIN1.h"
 #include "LCD.h"		//added by Luci
-#include "GDisp1.h"		//added by Luci
-#include "GFONT1.h"		//added by Luci
-#include "FDisp1.h"		//added by Luci
 #if PL_CONFIG_HAS_SHELL
   #include "CLS1.h"
   #include "Shell.h"
@@ -86,9 +83,6 @@ void APP_EventHandler(EVNT_Handle event) {
 #if PL_CONFIG_HAS_EVENTS
 /* Eventhandler REMOTE */
 void APP_EventHandler(EVNT_Handle event) {
-	FDisp1_PixelDim x,y; // Coordinates to show text on Display!
-	x = 10;
-	y = 10;
 	  /*! \todo handle events */
 	  switch(event) {
 	  case EVNT_STARTUP:
@@ -97,35 +91,35 @@ void APP_EventHandler(EVNT_Handle event) {
 		  LED1_Neg();
 	    break;
 	  case EVNT_SW1_PRESSED:
-		  SHELL_SendString("Button 1 pressed! \r\n");
-		  FDisp1_WriteString("Button 1",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
-		  GDisp1_UpdateFull();
+
+		  SHELL_SendString("Button 1 right! \r\n");
+		  ShowTextOnLCD("right");
 	  	  break;
 	  case EVNT_SW2_PRESSED:
-		  SHELL_SendString("Button 2 pressed! \r\n");
-		  FDisp1_WriteString("Button 2",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
-		  GDisp1_UpdateFull();
+		  SHELL_SendString("Button 2 left! \r\n");
+		  ShowTextOnLCD("left");
 	  	  break;
 	  case EVNT_SW3_PRESSED:
-		  SHELL_SendString("Button 3 pressed! \r\n");
-		  FDisp1_WriteString("Button 3",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
-		  GDisp1_UpdateFull();
+		  SHELL_SendString("Button 3 down! \r\n");
+		  ShowTextOnLCD("down");
 		  break;
 	  case EVNT_SW4_PRESSED:
-		  SHELL_SendString("Button 4 pressed! \r\n");
-		  FDisp1_WriteString("Button 4",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
-		  GDisp1_UpdateFull();
+		  SHELL_SendString("Button 4 push! \r\n");
+		  ShowTextOnLCD("push center");
 		  break;
 	  case EVNT_SW5_PRESSED:
-		  SHELL_SendString("Button 5 pressed! \r\n");
-		  FDisp1_WriteString("Button 5",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
-		  GDisp1_UpdateFull();
+		  SHELL_SendString("Button 5 up! \r\n");
+		  ShowTextOnLCD("up");
 		  break;
 	  case EVNT_SW6_PRESSED:
-		  SHELL_SendString("Button 6 pressed! \r\n");
-		  FDisp1_WriteString("Button 6",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
-		  GDisp1_UpdateFull();
+		  SHELL_SendString("Button 6 push side bottom! \r\n");
+		  ShowTextOnLCD("side bottom");
 		  break;
+	  case EVNT_SW7_PRESSED:
+		  SHELL_SendString("Button 7 push side top! \r\n");
+		  ShowTextOnLCD("side top");
+		  break;
+
 	  case EVNT_LED_HEARTBEAT:
 		  LED1_Neg();
 		break;

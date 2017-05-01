@@ -105,7 +105,7 @@ return ERR_OK;
 #endif /* PL_CONFIG_HAS_LCD_MENU */
 
 
-static void ShowTextOnLCD(unsigned char *text) {
+void ShowTextOnLCD(unsigned char *text) {
   FDisp1_PixelDim x, y;
 
   GDisp1_Clear();
@@ -114,6 +114,8 @@ static void ShowTextOnLCD(unsigned char *text) {
   FDisp1_WriteString(text, GDisp1_COLOR_BLACK, &x, &y, GFONT1_GetFont());
   GDisp1_UpdateFull();
 }
+
+
 
 static void LCD_Task(void *param) {
   (void)param; /* not used */
