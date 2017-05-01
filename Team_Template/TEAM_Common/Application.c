@@ -91,7 +91,6 @@ void APP_EventHandler(EVNT_Handle event) {
 		  LED1_Neg();
 	    break;
 	  case EVNT_SW1_PRESSED:
-
 		  SHELL_SendString("Button 1 right! \r\n");
 		  ShowTextOnLCD("right");
 	  	  break;

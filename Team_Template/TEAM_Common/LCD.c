@@ -132,12 +132,15 @@ static void LCD_Task(void *param) {
   LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, NULL);
 #endif
 
+#if !PL_CONFIG_HAS_SNAKE_GAME
   GDisp1_DrawLine(10,20,60,20,GDisp1_COLOR_BLACK);
   FDisp1_PixelDim x,y;
   x = 10;
   y = 10;
   FDisp1_WriteString("Hello World!",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
   GDisp1_UpdateFull();
+#endif
+
   for(;;) {
     if (LedBackLightisOn) {
       LCD_LED_On(); /* LCD backlight on */
