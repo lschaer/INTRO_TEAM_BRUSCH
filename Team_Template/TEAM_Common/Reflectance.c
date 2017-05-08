@@ -514,6 +514,7 @@ static void REF_StateMachine(void) {
     case REF_STATE_NOT_CALIBRATED:
       REF_MeasureRaw(SensorRaw);
       /*! \todo You might add a new event to your event module...*/
+
 #if REF_START_STOP_CALIB
       if (FRTOS1_xSemaphoreTake(REF_StartStopSem, 0)==pdTRUE) {
         refState = REF_STATE_START_CALIBRATION;

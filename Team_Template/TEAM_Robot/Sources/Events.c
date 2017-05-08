@@ -195,8 +195,9 @@ void QuadInt_OnInterrupt(void)
   SYS1_RecordEnterISR(); /* cannot use this, as it would use RTOS API calls above max syscall level! */
 #endif
 #if PL_CONFIG_HAS_QUADRATURE
-  Q4CLeft_Sample();
   Q4CRight_Sample();
+  Q4CLeft_Sample();
+
 #endif
 #if 0 && configUSE_SEGGER_SYSTEM_VIEWER_HOOKS
   //SEGGER_SYSVIEW_OnUserStop(0);
