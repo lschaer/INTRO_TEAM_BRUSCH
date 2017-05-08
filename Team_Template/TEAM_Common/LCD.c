@@ -30,11 +30,13 @@ static bool requestLCDUpdate = FALSE;
 
 #if PL_CONFIG_HAS_LCD_MENU
 typedef enum {
-  LCD_MENU_ID_NONE = LCDMENU_ID_NONE, /* special value! */
-  LCD_MENU_ID_MAIN,
+	LCD_MENU_ID_NONE = LCDMENU_ID_NONE, /* special value! */
+	LCD_MENU_ID_MAIN,
   	  LCD_MENU_ID_BACKLIGHT,
 	  LCD_MENU_ID_NUM_VALUE,
-  LCD_MENU_ID_SNAKE,
+	LCD_MENU_ID_GAME,
+	  LCD_MENU_ID_SNAKE,
+	  LCD_MENU_ID_CALL_OF_DUTY
 } LCD_MenuIDs;
 
 static LCDMenu_StatusFlags ValueChangeHandler(const struct LCDMenu_MenuItem_ *item, LCDMenu_EventType event, void **dataP) {
@@ -86,20 +88,39 @@ static LCDMenu_StatusFlags BackLightMenuHandler(const struct LCDMenu_MenuItem_ *
 static LCDMenu_StatusFlags SnakeGameHandler(const struct LCDMenu_MenuItem_ *item, LCDMenu_EventType event, void **dataP) {
   LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
 
+  if(event == LCDMENU_EVENT_ENTER){
   SNAKE_Init();
-
   FRTOS1_vTaskDelete(NULL);
   return flags;
+  }
+  return flags;
 }
+
+static LCDMenu_StatusFlags NoGameHandler(const struct LCDMenu_MenuItem_ *item, LCDMenu_EventType event, void **dataP) {
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
+
+  if(event == LCDMENU_EVENT_ENTER){
+	  FDisp1_PixelDim x,y;
+	  x = 0;
+	  y = 0;
+	  GDisp1_Clear();
+	  FDisp1_WriteString("Not implemented!",GDisp1_COLOR_BLACK,&x,&y,GFONT1_GetFont());
+	  GDisp1_UpdateFull();
+  }
+  return flags;
+}
+
 #endif
 
 static const LCDMenu_MenuItem menus[] =
 {/* id,                                    grp, pos,   up,                       down,                             text,           callback                      flags                  */
-    {LCD_MENU_ID_MAIN,                      0,   0,   LCD_MENU_ID_NONE,         LCD_MENU_ID_BACKLIGHT,            "General",      NULL,                         LCDMENU_MENU_FLAGS_NONE},
-      {LCD_MENU_ID_BACKLIGHT,               1,   0,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           BackLightMenuHandler,         LCDMENU_MENU_FLAGS_NONE},
-      {LCD_MENU_ID_NUM_VALUE,               1,   1,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           ValueChangeHandler,           LCDMENU_MENU_FLAGS_EDITABLE},
+    {LCD_MENU_ID_MAIN,                      0,   0,   LCD_MENU_ID_NONE,         LCD_MENU_ID_BACKLIGHT,            "General",      	NULL,                         LCDMENU_MENU_FLAGS_NONE},
+      {LCD_MENU_ID_BACKLIGHT,               1,   0,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           	BackLightMenuHandler,         LCDMENU_MENU_FLAGS_NONE},
+      {LCD_MENU_ID_NUM_VALUE,               1,   1,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           	ValueChangeHandler,           LCDMENU_MENU_FLAGS_EDITABLE},
 #if PL_CONFIG_HAS_SNAKE_GAME
-	{LCD_MENU_ID_SNAKE,                 	0,   1,   LCD_MENU_ID_NONE,         LCD_MENU_ID_NONE,                 "Snake",        SnakeGameHandler,           	LCDMENU_MENU_FLAGS_NONE},
+	  {LCD_MENU_ID_GAME,                 	0,   1,   LCD_MENU_ID_NONE,         LCD_MENU_ID_SNAKE,               "Game",        	NULL,           				LCDMENU_MENU_FLAGS_NONE},
+	  {LCD_MENU_ID_SNAKE,                 	2,   0,   LCD_MENU_ID_GAME,         LCD_MENU_ID_NONE,                "Snake",       	SnakeGameHandler,           	LCDMENU_MENU_FLAGS_NONE},
+	  {LCD_MENU_ID_CALL_OF_DUTY,            2,   1,   LCD_MENU_ID_GAME, 		LCD_MENU_ID_NONE,        		"Call of Duty",		NoGameHandler,           		LCDMENU_MENU_FLAGS_NONE},
 #endif
 };
 

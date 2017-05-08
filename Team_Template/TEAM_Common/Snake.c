@@ -132,9 +132,9 @@ static void showPause(void) {
   UTIL1_Num16sToStr(buf, sizeof(buf), point-1);
   FDisp1_WriteString(buf, GDisp1_COLOR_BLACK, &x, &y, font);
   
-  x = (GDisp1_GetWidth()-FDisp1_GetStringWidth((unsigned char*)"(Press Button)", font, NULL))/2; /* center text */
+  x = (GDisp1_GetWidth()-FDisp1_GetStringWidth((unsigned char*)"(Press Left -> back)", font, NULL))/2; /* center text */
   y += totalHeight;
-  FDisp1_WriteString((unsigned char*)"(Press Button)", GDisp1_COLOR_BLACK, &x, &y, font);
+  FDisp1_WriteString((unsigned char*)"(Press Left -> back)", GDisp1_COLOR_BLACK, &x, &y, font);
 
   GDisp1_UpdateFull();
   
@@ -304,11 +304,11 @@ static void gameover(void) {
   UTIL1_Num16sToStr(buf, sizeof(buf), point-1);
   FDisp1_WriteString(buf, GDisp1_COLOR_BLACK, &x, &y, font);
 
-  x = (GDisp1_GetWidth()-FDisp1_GetStringWidth((unsigned char*)"(Press Button)", font, NULL))/2; /* center text */
+  x = (GDisp1_GetWidth()-FDisp1_GetStringWidth((unsigned char*)"(Press left -> back)", font, NULL))/2; /* center text */
   y += totalHeight;
-  FDisp1_WriteString((unsigned char*)"(Press Button)", GDisp1_COLOR_BLACK, &x, &y, font);
+  FDisp1_WriteString((unsigned char*)"(Press left -> back)", GDisp1_COLOR_BLACK, &x, &y, font);
   GDisp1_UpdateFull();
-  delay(4000);
+  delay(1000);
   waitAnyButton();
  
   resetGame();  
