@@ -156,7 +156,7 @@ void PL_Init(void) {
 #if PL_CONFIG_HAS_BATTERY_ADC
   BATT_Init();
 #endif
-#if PL_CONFIG_HAS_SNAKE_GAME
+#if PL_CONFIG_HAS_SNAKE_GAME && !PL_CONFIG_HAS_LCD_MENU
   SNAKE_Init();
 #endif
 }

@@ -20,6 +20,7 @@
 #include "FRTOS1.h"
 //#include "RApp.h"
 #include "LCDMenu.h"
+#include "Snake.h"
 /*! \todo Add additional includes as needed */
 
 /* status variables */
@@ -31,8 +32,9 @@ static bool requestLCDUpdate = FALSE;
 typedef enum {
   LCD_MENU_ID_NONE = LCDMENU_ID_NONE, /* special value! */
   LCD_MENU_ID_MAIN,
-    LCD_MENU_ID_BACKLIGHT,
-    LCD_MENU_ID_NUM_VALUE,
+  	  LCD_MENU_ID_BACKLIGHT,
+	  LCD_MENU_ID_NUM_VALUE,
+  LCD_MENU_ID_SNAKE,
 } LCD_MenuIDs;
 
 static LCDMenu_StatusFlags ValueChangeHandler(const struct LCDMenu_MenuItem_ *item, LCDMenu_EventType event, void **dataP) {
@@ -80,11 +82,25 @@ static LCDMenu_StatusFlags BackLightMenuHandler(const struct LCDMenu_MenuItem_ *
   return flags;
 }
 
+#if PL_CONFIG_HAS_SNAKE_GAME
+static LCDMenu_StatusFlags SnakeGameHandler(const struct LCDMenu_MenuItem_ *item, LCDMenu_EventType event, void **dataP) {
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
+
+  SNAKE_Init();
+
+  FRTOS1_vTaskDelete(NULL);
+  return flags;
+}
+#endif
+
 static const LCDMenu_MenuItem menus[] =
-{/* id,                                     grp, pos,   up,                       down,                             text,           callback                      flags                  */
-    {LCD_MENU_ID_MAIN,                        0,   0,   LCD_MENU_ID_NONE,         LCD_MENU_ID_BACKLIGHT,            "General",      NULL,                         LCDMENU_MENU_FLAGS_NONE},
-      {LCD_MENU_ID_BACKLIGHT,                 1,   0,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           BackLightMenuHandler,         LCDMENU_MENU_FLAGS_NONE},
-      {LCD_MENU_ID_NUM_VALUE,                 1,   1,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           ValueChangeHandler,           LCDMENU_MENU_FLAGS_EDITABLE},
+{/* id,                                    grp, pos,   up,                       down,                             text,           callback                      flags                  */
+    {LCD_MENU_ID_MAIN,                      0,   0,   LCD_MENU_ID_NONE,         LCD_MENU_ID_BACKLIGHT,            "General",      NULL,                         LCDMENU_MENU_FLAGS_NONE},
+      {LCD_MENU_ID_BACKLIGHT,               1,   0,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           BackLightMenuHandler,         LCDMENU_MENU_FLAGS_NONE},
+      {LCD_MENU_ID_NUM_VALUE,               1,   1,   LCD_MENU_ID_MAIN,         LCD_MENU_ID_NONE,                 NULL,           ValueChangeHandler,           LCDMENU_MENU_FLAGS_EDITABLE},
+#if PL_CONFIG_HAS_SNAKE_GAME
+	{LCD_MENU_ID_SNAKE,                 	0,   1,   LCD_MENU_ID_NONE,         LCD_MENU_ID_NONE,                 "Snake",        SnakeGameHandler,           	LCDMENU_MENU_FLAGS_NONE},
+#endif
 };
 
 /*
@@ -155,32 +171,32 @@ static void LCD_Task(void *param) {
       requestLCDUpdate = FALSE;
       LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, NULL);
     }
-#if 0 /*! \todo Change this to for your own needs, or use direct task notification */
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_BTN_LEFT)) { /* left */
+#if 1 /*! \todo Change this to for your own needs, or use direct task notification */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW2_PRESSED)) { /* left */
       LCDMenu_OnEvent(LCDMENU_EVENT_LEFT, NULL);
 //      ShowTextOnLCD("left");
     }
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_BTN_RIGHT)) { /* right */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW1_PRESSED)) { /* right */
       LCDMenu_OnEvent(LCDMENU_EVENT_RIGHT, NULL);
 //      ShowTextOnLCD("right");
     }
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_BTN_UP)) { /* up */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW5_PRESSED)) { /* up */
       LCDMenu_OnEvent(LCDMENU_EVENT_UP, NULL);
 //      ShowTextOnLCD("up");
     }
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_BTN_DOWN)) { /* down */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW3_PRESSED)) { /* down */
       LCDMenu_OnEvent(LCDMENU_EVENT_DOWN, NULL);
 //      ShowTextOnLCD("down");
     }
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_BTN_CENTER)) { /* center */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW4_PRESSED)) { /* center */
       LCDMenu_OnEvent(LCDMENU_EVENT_ENTER, NULL);
 //      ShowTextOnLCD("center");
     }
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_SIDE_BTN_UP)) { /* side up */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW6_PRESSED)) { /* side up */
       LCDMenu_OnEvent(LCDMENU_EVENT_UP, NULL);
 //      ShowTextOnLCD("side up");
     }
-    if (EVNT_EventIsSetAutoClear(EVNT_LCD_SIDE_BTN_DOWN)) { /* side down */
+    if (EVNT_EventIsSetAutoClear(EVNT_SW7_PRESSED)) { /* side down */
       LCDMenu_OnEvent(LCDMENU_EVENT_DOWN, NULL);
 //      ShowTextOnLCD("side down");
     }

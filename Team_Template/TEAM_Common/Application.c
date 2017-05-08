@@ -80,7 +80,7 @@ void APP_EventHandler(EVNT_Handle event) {
 }
 #endif /* PL_CONFIG_HAS_EVENTS */
 #else /* PL_LOCAL_CONFIG_BOARD_IS_REMOTE*/
-#if PL_CONFIG_HAS_EVENTS
+#if PL_CONFIG_HAS_EVENTS && !PL_CONFIG_HAS_SNAKE_GAME
 /* Eventhandler REMOTE */
 void APP_EventHandler(EVNT_Handle event) {
 	  /*! \todo handle events */

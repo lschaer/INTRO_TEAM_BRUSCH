@@ -26,6 +26,7 @@
 #include "UTIL1.h"
 #include "FRTOS1.h"
 #include "Event.h"
+#include "LCD.h"
 
 /* constants */
 #define UP    1
@@ -46,6 +47,7 @@ static int snakeLen = SNAKE_LEN;
 static int point    = 0, points = 10;
 static int level    = 0, time   = SNAKE_SPEED;
 
+
 static GDisp1_PixelDim xSnake,    ySnake; /* snake face */
 static GDisp1_PixelDim xFood = 0, yFood  = 0; /* location of food */
 
@@ -65,7 +67,21 @@ static GDisp1_PixelDim snakeRow[SNAKE_MAX_LEN];
 
 
 static void waitAnyButton(void) {
-  /*! \todo Wait for any button pressed */
+	for(;;){
+		/*EVNT_HandleEvent(Snake_EventHandler, TRUE);
+		if(snakeDir.down || snakeDir.up || snakeDir.left || snakeDir.right || snakeDir.push){
+			snakeDir.down = FALSE; snakeDir.up = FALSE; snakeDir.left = FALSE; snakeDir.right = FALSE; snakeDir.push = FALSE;
+			return;
+		}*/
+		if(EVNT_EventIsSetAutoClear(EVNT_SW1_PRESSED) || EVNT_EventIsSetAutoClear(EVNT_SW3_PRESSED)
+				|| EVNT_EventIsSetAutoClear(EVNT_SW4_PRESSED) || EVNT_EventIsSetAutoClear(EVNT_SW5_PRESSED)){
+			return;
+		} else if(EVNT_EventIsSetAutoClear(EVNT_SW2_PRESSED)){
+			LCD_Init();
+			FRTOS1_vTaskDelete(NULL);
+			return;
+		}
+	}
 }
 
 static void delay(int ms) {
@@ -190,6 +206,7 @@ static void drawSnake(void) {
   }
   GDisp1_DrawFilledBox(xFood, yFood, 3, 3, GDisp1_COLOR_BLACK);
   GDisp1_UpdateFull();
+  GDisp1_UpdateFull();
   for(i = snakeLen; i > 0; i--) {
     snakeRow[i]  = snakeRow[i - 1];
     snakeCols[i] = snakeCols[i - 1];
@@ -227,37 +244,37 @@ static void direc(int d) {
 }
 
 static void moveSnake(void) {
-  /* LEFT */
-  /*! \todo handle events */
-  if("left event" && !right) {
-    if((xSnake > 0 || xSnake <= GDisp1_GetWidth() - xSnake)) {
-      direc(LEFT);
+	/* LEFT */
+	/*! \todo handle events */
+	if(EVNT_EventIsSetAutoClear(EVNT_SW2_PRESSED) && !right) {
+		if((xSnake > 0 || xSnake <= GDisp1_GetWidth() - xSnake)) {
+			direc(LEFT);
     }
     return;
   }
   /* RIGHT */
-  if("right event" && !left) {
+  if(EVNT_EventIsSetAutoClear(EVNT_SW1_PRESSED) && !left) {
     if((xSnake > 0 || xSnake <= GDisp1_GetWidth() - xSnake)) {
       direc(RIGHT);
     }
     return;
   }
   /* UP */
-  if("up event" && !down) {
+  if(EVNT_EventIsSetAutoClear(EVNT_SW5_PRESSED) && !down) {
     if((ySnake > 0 || ySnake <= GDisp1_GetHeight() - ySnake)) {
       direc(UP);
     }
     return;
   }
   /* DOWN */
-  if("down event" && !up) {
+  if(EVNT_EventIsSetAutoClear(EVNT_SW3_PRESSED) && !up) {
     if((ySnake > 0 || ySnake <= GDisp1_GetHeight() - ySnake)) {
       direc(DOWN);
     }
     return;
   }
   /* START/PAUSE */
-  if("start/pause event") {
+  if(EVNT_EventIsSetAutoClear(EVNT_SW4_PRESSED)) {
     showPause();
   }
 }
@@ -319,7 +336,7 @@ static void snake(void) {
     }
     /* the snake has eaten the food (from above or from below) */
     if((ySnake == yFood) || (ySnake == yFood+i)) {
-      if((xSnake == xFood) || (xSnake+i == xFood) || (xSnake == xFood+i)) {
+      if((xSnake == xFood) || (xSnake+i == xFood) || (xSnake == xFood+i) ) {
         eatFood();
       }
     }    
@@ -378,7 +395,7 @@ static void intro(void) {
   FDisp1_WriteString((unsigned char*)"Snake Game", GDisp1_COLOR_BLACK, &x, &y, font);
   y += totalHeight;
   x = (GDisp1_GetWidth()-FDisp1_GetStringWidth((unsigned char*)"McuOnEclipse", font, NULL))/2; /* center text */
-  FDisp1_WriteString((unsigned char*)"McuOnEclipse", GDisp1_COLOR_BLACK, &x, &y, font);
+  FDisp1_WriteString((unsigned char*)"Awesoooome!", GDisp1_COLOR_BLACK, &x, &y, font);
   GDisp1_UpdateFull();
   WAIT1_WaitOSms(3000);
 }
@@ -397,9 +414,11 @@ void SNAKE_Deinit(void) {
 }
 
 void SNAKE_Init(void) {
+
 	BaseType_t res;
 	xTaskHandle tskHndl;
 	res = xTaskCreate(SnakeTask,"Snake",configMINIMAL_STACK_SIZE+500,(void*)NULL,tskIDLE_PRIORITY,&tskHndl);
 	if(res!=pdPASS) { /*Error handling here*/}
+
 }
 #endif /* PL_HAS_SNAKE_GAME */

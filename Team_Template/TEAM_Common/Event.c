@@ -43,19 +43,19 @@ void EVNT_ClearEvent(EVNT_Handle event) {
 
 bool EVNT_EventIsSet(EVNT_Handle event) {
   /*! \todo Make it reentrant */
-  bool isSet;					/* modify LB*/
-  EnterCritical();				/* modify LB*/
-  isSet = GET_EVENT(event);		/* modify LB*/
-  ExitCritical();				/* modify LB*/
-  return isSet;					/* modify LB*/
-  // return GET_EVENT(event);   /* modify LB*/
+  bool isSet;						/* modify LB*/
+  EnterCritical();					/* modify LB*/
+  isSet = (GET_EVENT(event)!=0);	/* modify LB*/
+  ExitCritical();					/* modify LB*/
+  return isSet;						/* modify LB*/
+  // return GET_EVENT(event);   	/* modify LB*/
 }
 
 bool EVNT_EventIsSetAutoClear(EVNT_Handle event) {
   bool res;
   /*! \todo Make it reentrant */
   EnterCritical();				/* modify LB*/
-  res = GET_EVENT(event);
+  res = (GET_EVENT(event)!=0);
   ExitCritical();				/* modify LB*/
   if (res) {
 	EnterCritical();			/* modify LB*/
