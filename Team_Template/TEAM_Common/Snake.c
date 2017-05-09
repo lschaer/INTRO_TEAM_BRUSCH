@@ -46,6 +46,7 @@
 static int snakeLen = SNAKE_LEN;
 static int point    = 0, points = 10;
 static int level    = 0, time   = SNAKE_SPEED;
+static int foot_cnt = 50;
 
 
 static GDisp1_PixelDim xSnake,    ySnake; /* snake face */
@@ -229,7 +230,7 @@ static void upLevel(void) {
   level++;
   point   = 1;
   points += 10;
-  if(level > 1) {
+  if(level > 3) {
     time -= 4;
   }
 }
@@ -317,6 +318,15 @@ static void gameover(void) {
 static void snake(void) {
   int i;
   
+  foot_cnt -= 1;
+  if (foot_cnt <= 0 ){
+	  foot_cnt = 50;
+	  /* new coordinates food randomly */
+	  xFood = random(1, MAX_WIDTH-3);
+	  yFood = random(1, MAX_HEIGHT-3);
+  }
+
+
   xSnake = snakeCols[0];
   ySnake = snakeRow[0];
   if(point == 0 || point >= points) {
