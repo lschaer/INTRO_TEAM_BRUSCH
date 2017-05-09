@@ -24,9 +24,6 @@
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 
-static void CallBackLED(void*p) {			// this is not a Task ! Its a Callback function
-    LED1_Neg();
-}
 
 static void BlinkyTask(void *pvParameter){
 	for(;;){

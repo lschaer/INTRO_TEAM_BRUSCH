@@ -199,7 +199,17 @@ uint8_t MOT_ParseCommand(const unsigned char *cmd, bool *handled, const CLS1_Std
       CLS1_SendStr((unsigned char*)"Wrong argument, must be in the range -100..100\r\n", io->stdErr);
       res = ERR_FAILED;
     }
-  }
+  } else if (UTIL1_strncmp((char*)cmd, (char*)"motor duty ", sizeof("motor duty ")-1)==0) {
+	    p = cmd+sizeof("motor duty");
+	    if (UTIL1_xatoi(&p, &val)==ERR_OK && val >=-100 && val<=100) {
+	      MOT_SetSpeedPercent(&motorR, (MOT_SpeedPercent)val);
+	      MOT_SetSpeedPercent(&motorL, (MOT_SpeedPercent)val);
+	      *handled = TRUE;
+	    } else {
+	      CLS1_SendStr((unsigned char*)"Wrong argument, must be in the range -100..100\r\n", io->stdErr);
+	      res = ERR_FAILED;
+	    }
+	  }
   return res;
 }
 #endif /* PL_CONFIG_HAS_SHELL */
