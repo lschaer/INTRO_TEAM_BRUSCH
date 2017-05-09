@@ -35,7 +35,7 @@
 //#define PL_LOCAL_CONFIG_HAS_SHELL_DISABLED                /* disable shell */
 //#define PL_LOCAL_CONFIG_HAS_KEYS_DISABLED                 /* disable key/push buttons */
 //#define PL_LOCAL_CONFIG_HAS_TRIGGER_DISABLED              /* disable triggers */
-#define PL_LOCAL_CONFIG_HAS_DEBOUNCE_DISABLED             /* disable debouncing */
+//#define PL_LOCAL_CONFIG_HAS_DEBOUNCE_DISABLED             /* disable debouncing */
 //#define PL_LOCAL_CONFIG_HAS_RTOS_DISABLED                 /* disable RTOS usage */
 //#define PL_LOCAL_CONFIG_HAS_SEGGER_RTT_DISABLED           /* disable Segger RTT */
 //#define PL_LOCAL_CONFIG_HAS_USB_CDC_DISABLED              /* disable USB CDC */
@@ -62,8 +62,8 @@
 #define PL_LOCAL_CONFIG_HAS_MPC4728_DISABLED              /* disable MPC4728 (only for V1 robot) */
 #define PL_LOCAL_CONFIG_HAS_QUAD_CALIBRATION_DISABLED     /* disable quadrature calibration (only for V1 robot) */
 //#define PL_LOCAL_CONFIG_HAS_MOTOR_TACHO_DISABLED          /* disable tacho */
-#define PL_LOCAL_CONFIG_HAS_PID_DISABLED                  /* disable PID */
-#define PL_LOCAL_CONFIG_HAS_DRIVE_DISABLED                /* disable drive module */
+//#define PL_LOCAL_CONFIG_HAS_PID_DISABLED                  /* disable PID */
+//#define PL_LOCAL_CONFIG_HAS_DRIVE_DISABLED                /* disable drive module */
 #define PL_LOCAL_CONFIG_HAS_LINE_FOLLOW_DISABLED          /* disable line following */
 
 #define PL_LOCAL_CONFIG_HAS_TURN_DISABLED                 /* disable turning module */
