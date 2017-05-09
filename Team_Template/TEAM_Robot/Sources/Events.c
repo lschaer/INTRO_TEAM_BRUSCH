@@ -56,6 +56,7 @@ void TI1_OnInterrupt(void)
 #if PL_CONFIG_HAS_TIMER
   TMR_OnInterrupt();
 #endif
+  TACHO_Sample();
   TmDt1_AddTick();
 }
 
