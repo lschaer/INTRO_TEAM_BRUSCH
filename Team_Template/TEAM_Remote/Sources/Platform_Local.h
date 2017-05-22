@@ -35,7 +35,7 @@
 //#define PL_LOCAL_CONFIG_HAS_KEYS_DISABLED                 /* disable key/push buttons */
 //#define PL_LOCAL_CONFIG_HAS_SHELL_DISABLED                /* disable shell */
 //#define PL_LOCAL_CONFIG_HAS_TRIGGER_DISABLED              /* disable triggers */
-//#define PL_LOCAL_CONFIG_HAS_SNAKE_GAME_DISABLED           /* disable snake game */
+#define PL_LOCAL_CONFIG_HAS_SNAKE_GAME_DISABLED           /* disable snake game */
 
 //#define PL_LOCAL_CONFIG_HAS_DEBOUNCE_DISABLED             /* disable debouncing */
 

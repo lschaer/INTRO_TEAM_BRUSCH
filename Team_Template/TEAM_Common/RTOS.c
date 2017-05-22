@@ -15,6 +15,10 @@
 #include "Trigger.h"
 #include "Keys.h"
 #include "KeyDebounce.h"
+#include "Reflectance.h"
+#include "Turn.h"
+#include "Drive.h"
+
 
 
 #include "LED.h"
@@ -24,7 +28,7 @@
 
 #if PL_LOCAL_CONFIG_BOARD_IS_ROBO
 
-
+#if 0
 static void BlinkyTask(void *pvParameter){
 	for(;;){
       //LED1_Neg();
@@ -40,6 +44,30 @@ static void MainLoopTask(void *pvParameter){
 	  vTaskDelay(100/portTICK_PERIOD_MS); // 1000*ticks /10ms = 1s
 	}
 }
+#endif
+
+static void BattleTask(void *pvParameter){
+	int32_t val1 = 1000;
+
+	for(;;){
+		/* Blink LED to Show Battlemode */
+		TickType_t xLastWakeTime = xTaskGetTickCount();
+		LEDPin2_NegVal();
+
+		if(REF_GetLineKind()==REF_LINE_NONE){
+			DRV_SetMode(DRV_MODE_SPEED);
+			DRV_SetSpeed(val1, val1);
+		} else if(REF_GetLineKind()==REF_LINE_FULL){
+			DRV_SetMode(DRV_MODE_POS);
+			TURN_TurnAngle(180, NULL);
+			TURN_Turn(TURN_STOP, NULL);
+		}
+		else{
+			DRV_SetMode(DRV_MODE_NONE);
+		}
+		//FRTOS1_vTaskDelayUntil(&xLastWakeTime,1/portTICK_PERIOD_MS);
+	}
+}
 
 
 void RTOS_Init(void) {
@@ -49,6 +77,8 @@ void RTOS_Init(void) {
 
   BaseType_t res ;
   xTaskHandle taskHndl ;
+
+#if 0
   /* BlinkyTask */
   res = xTaskCreate(BlinkyTask,			/* function */
 		  "Blinky",						/* Kernel awareness name */
@@ -68,6 +98,17 @@ void RTOS_Init(void) {
 		  &taskHndl						/* handle */
 		  );
   if(res!=pdPASS) { /*Error handling here*/}
+#endif
+
+  /* BattleMode */
+    res = xTaskCreate(BattleTask,		/* function */
+  		  "BattleTask",					/* Kernel awareness name */
+  		  configMINIMAL_STACK_SIZE+100,  /* stack */
+  		  (void*)NULL,					/* task parameter */
+  		  tskIDLE_PRIORITY+1,				/* priority */
+  		  &taskHndl						/* handle */
+  		  );
+    if(res!=pdPASS) { /*Error handling here*/}
 
 }
 

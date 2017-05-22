@@ -42,7 +42,7 @@
 //#define PL_LOCAL_CONFIG_HAS_SHELL_QUEUE_DISABLED          /* disable shell queue */
 #define PL_LOCAL_CONFIG_HAS_SQUEUE_SINGLE_CHAR_DISABLED   /* disable single character support in shell queue */
 //#define PL_LOCAL_CONFIG_HAS_SEMAPHORE_DISABLED            /* disable semaphore test module */
-#define PL_LOCAL_CONFIG_HAS_CONFIG_NVM_DISABLED           /* disable NVM storage */
+//#define PL_LOCAL_CONFIG_HAS_CONFIG_NVM_DISABLED           /* disable NVM storage */
 
 /* remote controller hardware functionality */
 #define PL_LOCAL_CONFIG_HAS_RADIO_DISABLED                /* disable Radio transceiver */
@@ -64,10 +64,10 @@
 //#define PL_LOCAL_CONFIG_HAS_MOTOR_TACHO_DISABLED          /* disable tacho */
 //#define PL_LOCAL_CONFIG_HAS_PID_DISABLED                  /* disable PID */
 //#define PL_LOCAL_CONFIG_HAS_DRIVE_DISABLED                /* disable drive module */
-#define PL_LOCAL_CONFIG_HAS_LINE_FOLLOW_DISABLED          /* disable line following */
+//#define PL_LOCAL_CONFIG_HAS_LINE_FOLLOW_DISABLED          /* disable line following */
 
 //#define PL_LOCAL_CONFIG_HAS_TURN_DISABLED                 /* disable turning module */
-#define PL_LOCAL_CONFIG_HAS_LINE_MAZE_DISABLED            /* disable maze solving */
+//#define PL_LOCAL_CONFIG_HAS_LINE_MAZE_DISABLED            /* disable maze solving */
 #define PL_LOCAL_CONFIG_HAS_BATTERY_ADC_DISABLED          /* disable battery ADC */
 
 #endif /* SOURCES_PLATFORM_LOCAL_H_ */
