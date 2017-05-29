@@ -25,6 +25,8 @@
     #define PL_CONFIG_BOARD_IS_ROBO_V1  (1)
     #define PL_CONFIG_BOARD_IS_ROBO_V2  (0)
   #endif
+
+
 #elif PL_LOCAL_CONFIG_BOARD_IS_FRDM
   #define PL_CONFIG_BOARD_IS_FRDM     (1)
   #define PL_CONFIG_BOARD_IS_REMOTE   (0)
@@ -40,6 +42,8 @@
 #else
   #error "One board type has to be defined in Platform_Local.h!"
 #endif
+
+#define PL_CONFIG_HAS_SUMO     (1 && PL_LOCAL_CONFIG_BOARD_IS_ROBO)
 
 /* configuration from local config */
 #define PL_CONFIG_NOF_LEDS      PL_LOCAL_CONFIG_NOF_LEDS /* number of LEDs */

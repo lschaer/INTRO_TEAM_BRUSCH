@@ -39,12 +39,11 @@
 #include "BitIoLdd2.h"
 #include "SW1.h"
 #include "BitIoLdd3.h"
+#include "AS1.h"
+#include "ASerialLdd3.h"
 #include "CLS1.h"
 #include "FRTOS1.h"
 #include "RTOSCNTRLDD1.h"
-#include "TI1.h"
-#include "TimerIntLdd1.h"
-#include "TU1.h"
 #include "RTT1.h"
 #include "SYS1.h"
 #include "LED_IR.h"
@@ -214,27 +213,6 @@ void PTRC1_OnTraceWrap(void);
 ** ===================================================================
 */
 void QuadInt_OnInterrupt(void);
-
-/*
-** ===================================================================
-**     Event       :  TU1_OnCounterRestart (module Events)
-**
-**     Component   :  TU1 [TimerUnit_LDD]
-*/
-/*!
-**     @brief
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
-**         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt] is enabled.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-*/
-/* ===================================================================*/
-void TU1_OnCounterRestart(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 

@@ -46,14 +46,29 @@ static void MainLoopTask(void *pvParameter){
 }
 #endif
 
+
+
 static void BattleTask(void *pvParameter){
-	int32_t val1 = 1000;
+	int32_t val1 = 500;
 
 	for(;;){
 		/* Blink LED to Show Battlemode */
-		TickType_t xLastWakeTime = xTaskGetTickCount();
 		LEDPin2_NegVal();
 
+
+
+		if(REF_GetLineKind()==REF_LINE_FULL){
+			DRV_SetMode(DRV_MODE_SPEED);
+			DRV_SetSpeed(val1, val1);
+		}
+		else{
+			DRV_SetMode(DRV_MODE_POS);
+			TURN_TurnAngle(90, NULL);
+		}
+
+
+
+#if 0
 		if(REF_GetLineKind()==REF_LINE_NONE){
 			DRV_SetMode(DRV_MODE_SPEED);
 			DRV_SetSpeed(val1, val1);
@@ -65,7 +80,9 @@ static void BattleTask(void *pvParameter){
 		else{
 			DRV_SetMode(DRV_MODE_NONE);
 		}
-		//FRTOS1_vTaskDelayUntil(&xLastWakeTime,1/portTICK_PERIOD_MS);
+#endif
+
+		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 }
 

@@ -82,6 +82,10 @@
 #endif
 #include "KIN1.h"
 #include "TmDt1.h"
+#if PL_CONFIG_HAS_SUMO
+#include "Sumo.h"
+#endif
+
 
 #if CLS1_DEFAULT_SERIAL
   #error "Default is RTT. Disable any Shell default connection in the component propeties, as we are setting it a runtime!"
@@ -276,6 +280,9 @@ static const CLS1_ParseCommandCallback CmdParserTable[] =
 #endif
 #if TmDt1_PARSE_COMMAND_ENABLED
   TmDt1_ParseCommand,
+#endif
+#if PL_CONFIG_HAS_SUMO
+  SUMO_ParseCommand,
 #endif
   NULL /* Sentinel */
 };

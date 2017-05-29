@@ -81,6 +81,11 @@
 #if PL_CONFIG_HAS_SNAKE_GAME
 	#include "Snake.h"
 #endif
+#if PL_CONFIG_HAS_SUMO
+  #include "Sumo.h"
+#endif
+
+
 
 
 void PL_Init(void) {
@@ -158,6 +163,9 @@ void PL_Init(void) {
 #endif
 #if PL_CONFIG_HAS_SNAKE_GAME && !PL_CONFIG_HAS_LCD_MENU
   SNAKE_Init();
+#endif
+#if PL_CONFIG_HAS_SUMO
+  SUMO_Init();
 #endif
 }
 
